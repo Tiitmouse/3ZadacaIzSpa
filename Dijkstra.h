@@ -12,12 +12,9 @@
 
 class DijkstraComparison
 {
-    //I don't think using a smart pointer here is beneficial. If you disagree, you're absolutely right!
     gbl::Map<float>* distances;
 public:
     explicit DijkstraComparison(gbl::Map<float>* i_distances = nullptr);
-
-    //I've never used operator functions before. I took this code from StackOverflow.
     bool operator()(const gbl::Position<>& i_left_cell, const gbl::Position<>& i_right_cell) const;
 };
 

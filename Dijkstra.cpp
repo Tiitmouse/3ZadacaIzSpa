@@ -22,7 +22,6 @@ DijkstraComparison::DijkstraComparison(gbl::Map<float>* i_distances) :
 
 bool DijkstraComparison::operator()(const gbl::Position<>& i_left_cell, const gbl::Position<>& i_right_cell) const
 {
-    //We're comparing the cells based on their distance value.
     float left_cell_distance = distances->at(i_left_cell.first).at(i_left_cell.second);
     float right_cell_distance = distances->at(i_right_cell.first).at(i_right_cell.second);
 
@@ -44,7 +43,6 @@ bool dijkstra_search(unsigned short& i_path_length, unsigned short& i_total_chec
 
         gbl::Position<> min_distance_cell;
 
-        //I added this loop because there is a chance we can check the same cell multiple times since we're pushing cells in our queue to update it.
         do
         {
             min_distance_cell = i_path_queue.top();
@@ -129,7 +127,6 @@ void dijkstra_reset(bool& i_finished, unsigned short& i_path_length, unsigned sh
             }
             else
             {
-                //We're using FLT_MAX because there is no constant that represents infinity.
                 i_distances[a][b] = FLT_MAX;
             }
         }

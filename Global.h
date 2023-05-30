@@ -17,7 +17,6 @@ namespace gbl {
 
     }
     namespace PATHFINDING {
-        //If you don't want to see the process of the search, set this constant to USHRT_MAX.
         constexpr unsigned short CHECKS_PER_FRAME = 40;
     }
 
@@ -43,10 +42,6 @@ namespace gbl {
 
         constexpr unsigned short HEIGHT = 720;
         constexpr unsigned short WIDTH = 1280;
-
-        //This will make the program run at 60 FPS.
-        //Because 1 second == 1,000,000 microseconds
-        //1,000,000 microseconds / 60 frames = 16667 microseconds per frame
         constexpr std::chrono::microseconds FRAME_DURATION(16667);
     }
 

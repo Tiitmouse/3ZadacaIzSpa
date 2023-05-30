@@ -11,9 +11,12 @@
 #include "Dijkstra.h"
 
 using namespace std;
+bool LoadTexture(sf::Texture&t, std::string path){
+       return t.loadFromFile(path);
+}
 
 int main() {
-    //----------------< Dijkstra's algorithm start >----------------
+
     bool dijkstra_finished = false;
 
     unsigned short dijkstra_path_length = 0;
@@ -25,12 +28,12 @@ int main() {
 
     gbl::Map<float> dijkstra_distances = {};
 
-    //I should've used typedef here.
+
     priority_queue<gbl::Position<>, vector<gbl::Position<>>, DijkstraComparison> dijkstra_path_queue(
             (DijkstraComparison(&dijkstra_distances)));
 
     gbl::Map<> map = {};
-    //----------------< Dijkstra's algorithm end >----------------
+
 
 
     bool mouse_pressed = false;
@@ -50,12 +53,14 @@ int main() {
     sf::Sprite map_sprite;
 
     sf::Texture map_texture;
-    map_texture.loadFromFile("../Map.png");
+    if(LoadTexture(map_texture,"Map.png"));
+    else
+        LoadTexture(map_texture,"../Map.png");
 
     gbl::Position<> finish_position(gbl::MAP::COLUMNS - 1, gbl::MAP::ROWS - 1);
     gbl::Position<> start_position(0, 0);
 
-    //This is used to draw lines of cells.
+
     gbl::Position<short> mouse_cell_start;
 
     for (array<gbl::MAP::Cell, gbl::MAP::ROWS> &column: map) {
@@ -87,19 +92,19 @@ int main() {
                     }
                     case sf::Event::KeyPressed: {
                         switch (event.key.code) {
-                            case sf::Keyboard::Enter: //Pause/Resume the search
+                            case sf::Keyboard::Enter:
                             {
                                 pause_search = 1 - pause_search;
 
                                 break;
                             }
-                            case sf::Keyboard::R: //Restart the search
+                            case sf::Keyboard::R:
                             {
                                 map_updated = 1;
 
                                 break;
                             }
-                            case sf::Keyboard::Space: //Clear the map
+                            case sf::Keyboard::Space:
                             {
                                 for (unsigned short a = 0; a < gbl::MAP::COLUMNS; a++) {
                                     for (unsigned short b = 0; b < gbl::MAP::ROWS; b++) {
@@ -129,12 +134,12 @@ int main() {
                 char step_x;
                 char step_y;
 
-                //Why it's line_size and not line_length?
+
                 unsigned short line_size;
 
                 gbl::Position<short> mouse_cell = get_mouse_cell(window);
 
-                //Here we're choosing the maximum between the vertical and horizontal distances.
+
                 line_size = 1 + max(abs(mouse_cell.first - mouse_cell_start.first),
                                     abs(mouse_cell.second - mouse_cell_start.second));
 
@@ -144,7 +149,7 @@ int main() {
                 for (unsigned short a = 0; a < line_size; a++) {
                     gbl::Position<short> cell;
 
-                    //We take 1 step in one direction and use the slope to calculate the step in the other direction.
+
                     cell.first = mouse_cell_start.first + step_x * floor(a * (1 + abs(mouse_cell.first -
                                                                                       mouse_cell_start.first)) /
                                                                          static_cast<float>(line_size));
@@ -184,7 +189,6 @@ int main() {
                 mouse_cell_start = mouse_cell;
             }
 
-            //Reset everything!
             if (1 == map_updated) {
                 map = map;
 
@@ -194,7 +198,6 @@ int main() {
 
             }
 
-            //Search!
             if (0 == pause_search) {
                 if (0 == dijkstra_finished) {
                     dijkstra_finished = dijkstra_search(dijkstra_path_length, dijkstra_total_checks, dijkstra_duration,
@@ -205,7 +208,7 @@ int main() {
 
             }
 
-            //Draw everything!
+
             if (gbl::SCREEN::FRAME_DURATION > lag) {
                 window.clear();
                 draw_map(0, 0, finish_position, start_position, window, map_sprite,

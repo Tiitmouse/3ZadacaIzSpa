@@ -17,5 +17,5 @@ gbl::Position<short> get_mouse_cell(const sf::RenderWindow& i_window)
     float mouse_y = sf::Mouse::getPosition(i_window).y - gbl::MAP::ORIGIN_Y * gbl::SCREEN::RESIZE;
 
     return gbl::Position<short>(float(mouse_x / gbl::MAP::CELL_SIZE / gbl::SCREEN::RESIZE),
-                                float(mouse_y / gbl::MAP::CELL_SIZE / gbl::SCREEN::RESIZE)); //floor
+                                float(mouse_y / gbl::MAP::CELL_SIZE / gbl::SCREEN::RESIZE));
 }
